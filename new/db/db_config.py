@@ -68,7 +68,11 @@ def save_score(user_id, game_id, score):
         cursor.execute('''
         INSERT INTO scores (user_id, game_id, best_score)
         VALUES (?, ?, ?)
-        ON CONFLICT(user_id, game_id) DO UPDATE SET best_score = MAX(best_score, excluded.best_score)
+        ON CONFLICT(user_id, game_id) DO UPDATE SET best_score = 
+            CASE 
+                WHEN excluded.best_score > scores.best_score THEN excluded.best_score 
+                ELSE scores.best_score 
+            END
         ''', (user_id, game_id, score))
         conn.commit()
 # --------------------------------------------------------------------
@@ -79,6 +83,8 @@ def create_game(name):
         cursor = conn.cursor()
         cursor.execute('INSERT INTO games (name) VALUES (?)', (name,))
         return cursor.lastrowid
+    conn.commit()
+    
     
 def delete_game(game_id):
     with get_connection() as conn:
@@ -103,7 +109,8 @@ def get_best_score(user_id, game_id):
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute('SELECT best_score FROM scores WHERE user_id = ? AND game_id = ?', (user_id, game_id))
-        return cursor.fetchone()[0] if cursor.fetchone() else 0
+        row = cursor.fetchone()
+        return row[0] if row else 0
     
 def get_best_score_of_game(game_id):
     with get_connection() as conn:

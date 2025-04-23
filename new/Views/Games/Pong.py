@@ -1,6 +1,8 @@
 import pygame  # Імпорт бібліотеки для розробки ігор
 import os  # Для роботи з файловою системою
 import random  # Для генерації випадкових напрямків м’яча
+import Models.User
+from db import db_config # Імпорт модуля для роботи з базою даних
 
 # === Конфігурація ===
 
@@ -25,7 +27,10 @@ pygame.init()  # Ініціалізація всіх модулів Pygame
 pygame.mixer.init()  # Ініціалізація аудіо
 
 class Game:
-    def __init__(self):
+    def __init__(self, user: Models.User.User):
+        self.user = user
+    
+        self.best_score = db_config.get_best_score(self.user[0], 1)
         # Завантаження музики
         self.menu_music = pygame.mixer.Sound("music_menu.mp3")
         self.game_music = pygame.mixer.Sound("game_music.mp3")
@@ -40,13 +45,6 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Pong Local Game")
         self.clock = pygame.time.Clock()  # Для контролю частоти кадрів
-
-        # Ігрові змінні
-        self.score = 0
-        self.best_score = 0
-        self.running = True
-        self.paused = False
-        self.in_menu = True
 
         self.reset_game()  # Початкове скидання гри
 
@@ -140,39 +138,20 @@ class Game:
             self.reset_game()
 
     def run(self):
-        # Запуск головного циклу гри
-        self.menu_music.play(loops=-1)
+        self.running = True
+        self.paused = False
+        self.start_game()
 
+    def start_game(self):
         while self.running:
-            if self.in_menu:
-                self.show_menu()
-            else:
-                self.handle_events()
-                if not self.paused:
-                    self.handle_input()
-                    self.update_ball()
-                self.draw_game()
-                self.clock.tick(60)
-
-        pygame.quit()  # Вихід з гри
-
-    def show_menu(self):
-        # Меню вибору режиму
-        self.screen.fill(BLACK)
-        self.blit_text_centered("Select Game:", self.BigFONT, 60)
-        self.blit_text_centered("1: Pong", self.BigFONT, 120)
-        self.blit_text_centered("Press ENTER to start", self.MiddleFONT, 180)
-        pygame.display.flip()
-
-        # Обробка подій у меню
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running = False
-                return
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                self.in_menu = False
-                self.menu_music.stop()
-                self.game_music.play(loops=-1)
+            self.handle_events()
+            if not self.paused:
+                self.handle_input()
+                self.update_ball()
+            self.draw_game()
+            self.clock.tick(60)
+        db_config.save_score(self.user[0], 1, self.best_score)  # Оновлення найкращого рахунку в базі даних
+        return "game_over"        
 
     def handle_events(self):
         # Обробка ігрових подій

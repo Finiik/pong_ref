@@ -1,6 +1,7 @@
 import pygame
 from db import db_config
-
+import Models.User
+from Views.Games.Game_Selection_Form import GameSelector
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (100, 100, 100)
@@ -78,9 +79,11 @@ class RegisterForm:
             self.message = "Username already exists!"
         else:
             db_config.create_user(self.username, self.password)
+            user = db_config.get_user_by_username(self.username)
             self.message = "Registration successful!"
-            pygame.time.delay(1000)
-            return "menu"
+           
+            GameSelector(self.screen, self.font, user).run()  # Start game selection after registration
+            return "game_selection"
         return None
 
     def run(self):
