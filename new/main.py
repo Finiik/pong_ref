@@ -14,7 +14,7 @@ db_config.init_db()
 def run_auth_flow():
     
     while True:
-        choice = Select_Auth_Form.main_menu()  # This will show the auth menu
+       Select_Auth_Form.main_menu()  # This will show the auth menu
         # if choice == "login":
         #     result = login_form.draw()
         #     if isinstance(result, int):  # User logged in successfully

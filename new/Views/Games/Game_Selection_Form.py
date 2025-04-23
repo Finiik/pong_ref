@@ -2,6 +2,7 @@ import sqlite3
 import pygame
 from Views.Games.Pong import Game  # Make sure this is a class with a .run() method
 import Models.User
+from Views.Register import Select_Auth_Form  # Import the file with main_menu() 
 # === Конфігурація ===
 WIDTH, HEIGHT = 320, 640
 WHITE = (255, 255, 255)
@@ -48,7 +49,7 @@ class GameSelector:
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return False
+                self.running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     self.start_selected_game()
@@ -56,6 +57,8 @@ class GameSelector:
                     self.selected_game_index = (self.selected_game_index + 1) % len(self.games)
                 elif event.key == pygame.K_UP:
                     self.selected_game_index = (self.selected_game_index - 1) % len(self.games)
+                elif event.key == pygame.K_ESCAPE:
+                    return False  # Trigger end of run loop
         return True
 
     def start_selected_game(self):
@@ -80,7 +83,7 @@ class GameSelector:
             running = self.handle_events()
             self.draw()
             self.clock.tick(60)
-        pygame.quit()
+        Select_Auth_Form.main_menu()
 
 
 if __name__ == "__main__":
