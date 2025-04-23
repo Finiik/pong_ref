@@ -144,5 +144,4 @@ def get_all_data():
     
 #create empty db----------------------------------------------------
 if __name__ == "__main__":
-    init_db()
-    print("Database and tables created!")
+    get_all_data()

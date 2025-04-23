@@ -1,7 +1,9 @@
 import pygame
 from db import db_config
 import Models.User
+import os  # Для роботи з файловою системою
 from Views.Games.Game_Selection_Form import GameSelector
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (100, 100, 100)
@@ -17,24 +19,24 @@ class RegisterForm:
         self.message = ""
 
         # Input field rects
-        self.username_rect = pygame.Rect(250, 140, 300, 40)
-        self.password_rect = pygame.Rect(250, 190, 300, 40)
+        self.username_rect = pygame.Rect(65, 140, 300, 40)
+        self.password_rect = pygame.Rect(65, 260, 300, 40)
 
     def draw(self):
         self.screen.fill(BLACK)
         self._draw_text("Register", 50, 60)
 
         # Draw input labels
-        self._draw_text("Username:", 150)
-        self._draw_text("Password:", 200)
+        self._draw_text("Username:", 90)
+        self._draw_text("Password:", 210)
 
         # Draw input boxes
         self._draw_input_box(self.username_rect, self.username, self.active_input == "username")
         self._draw_input_box(self.password_rect, "*" * len(self.password), self.active_input == "password")
 
         # Instructions and messages
-        self._draw_text("Press ENTER to register", 270)
-        self._draw_text("Press ESC to go back", 300)
+        self._draw_text("Press ENTER to register", 310)
+        self._draw_text("Press ESC to go back", 350)
         self._draw_text(self.message, 350, color=(255, 50, 50))
 
         pygame.display.flip()
@@ -43,7 +45,7 @@ class RegisterForm:
         color = ACTIVE_COLOR if active else GRAY
         pygame.draw.rect(self.screen, color, rect, 2)
         txt_surface = self.font.render(text, True, WHITE)
-        self.screen.blit(txt_surface, (rect.x + 10, rect.y + 5))
+        self.screen.blit(txt_surface, (rect.x + 5, rect.y + 5))
 
     def _draw_text(self, text, y, color=WHITE):
         label = self.font.render(text, True, color)

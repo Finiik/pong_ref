@@ -6,9 +6,9 @@ from db import db_config # Імпорт модуля для роботи з ба
 
 # === Конфігурація ===
 
-WIDTH, HEIGHT = 320, 640  # Повний розмір вікна
+WIDTH, HEIGHT = 520, 640  # Повний розмір вікна
 GAME_FIELD_WIDTH, GAME_FIELD_HEIGHT = 250, 350  # Розмір ігрового поля
-GAME_FIELD_X, GAME_FIELD_Y = 35, 80  # Відступ ігрового поля від країв екрана
+GAME_FIELD_X, GAME_FIELD_Y = 135, 80  # Відступ ігрового поля від країв екрана
 
 BALL_SIZE = 9  # Розмір м’яча
 PLATFORM_WIDTH = 50  # Ширина платформи

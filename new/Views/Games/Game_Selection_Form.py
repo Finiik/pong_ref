@@ -4,7 +4,7 @@ from Views.Games.Pong import Game  # Make sure this is a class with a .run() met
 import Models.User
 from Views.Register import Select_Auth_Form  # Import the file with main_menu() 
 # === Конфігурація ===
-WIDTH, HEIGHT = 320, 640
+WIDTH, HEIGHT = 520, 640
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
@@ -35,13 +35,13 @@ class GameSelector:
 
     def draw(self):
         self.screen.fill(BLACK)
-        self._draw_text(f"Hello {self.user[1]}\n", 50, self.font)
+        self._draw_text(f"Hello {self.user[1]}!",50, self.font)
 
-        self._draw_text("Select Game:", 60, self.font)
+        self._draw_text("Select Game:", 100, self.font)
 
         for i, game in enumerate(self.games):
             color = (255, 255, 0) if i == self.selected_game_index else WHITE
-            self._draw_text(f"{i + 1}: {game}", 120 + i * 40, self.font, color)
+            self._draw_text(f"{i + 1}: {game}", 150 + i * 40, self.font, color)
 
         self._draw_text("Press ENTER to start", HEIGHT - 60, self.font)
         pygame.display.flip()
@@ -74,6 +74,13 @@ class GameSelector:
             pong_game = Game(self.user)
              # Make sure Pong has a class with a .run() method
             result = pong_game.run()
+            if result == "game_over":
+                self.run()
+        if selected_game == "Snake":
+            from Views.Games.Snake import Game  # ✅ Local import to avoid circular
+            snake_game = Game(self.user)
+             # Make sure Pong has a class with a .run() method
+            result = snake_game.run()
             if result == "game_over":
                 self.run()
 
