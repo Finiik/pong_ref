@@ -41,6 +41,7 @@ def create_user(username, password):
         cursor = conn.cursor()
         cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
         return cursor.lastrowid
+    conn.commit()
 
 def get_user_by_username(username):
     with get_connection() as conn:
@@ -121,6 +122,18 @@ def get_all_users_with_scores_for_game(game_id):
             ORDER BY scores.best_score DESC
         ''', (game_id,))
         return cursor.fetchall()
+    
+def get_all_data():
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT users.username, games.name, scores.best_score
+            FROM scores
+            JOIN users ON scores.user_id = users.id
+            JOIN games ON scores.game_id = games.id
+        ''')
+        return cursor.fetchall()
+
     
 #create empty db----------------------------------------------------
 if __name__ == "__main__":
