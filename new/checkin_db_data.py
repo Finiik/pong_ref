@@ -1,5 +1,5 @@
 import pygame
-from db import db_config
+from database import db_config
 
 data = db_config.get_user_by_username("Player1")
 db_config.save_score(data[0], 1, 100)

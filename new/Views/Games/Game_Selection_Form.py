@@ -1,3 +1,4 @@
+from Views.Games.Pacman import run as run_pacman
 import sqlite3
 import pygame
 from Views.Games.Pong import Game  # Make sure this is a class with a .run() method
@@ -21,7 +22,7 @@ class GameSelector:
         self.clock = pygame.time.Clock()
 
     def load_games_from_db(self):
-        conn = sqlite3.connect('game_scores.db')
+        conn = sqlite3.connect('game_scores.database')
         cursor = conn.cursor()
         cursor.execute("SELECT name FROM games")
         games = cursor.fetchall()
@@ -70,19 +71,27 @@ class GameSelector:
         pygame.display.flip()
 
         if selected_game == "Pong":
-            from Views.Games.Pong import Game  # ✅ Local import to avoid circular
+            from Views.Games.Pong import Game  # Local import to avoid circular
             pong_game = Game(self.user)
              # Make sure Pong has a class with a .run() method
             result = pong_game.run()
             if result == "game_over":
                 self.run()
         if selected_game == "Snake":
-            from Views.Games.Snake import Game  # ✅ Local import to avoid circular
+            from Views.Games.Snake import Game  # Local import to avoid circular
             snake_game = Game(self.user)
              # Make sure Pong has a class with a .run() method
             result = snake_game.run()
             if result == "game_over":
                 self.run()
+        if selected_game == "Pacman":
+            from Views.Games.Pacman import run as run_pacman
+            run_pacman()
+            self.run()
+        if selected_game == "Space Invader":
+            from Views.Games.SpaceInvader import run as run_space_invader
+            run_space_invader()
+            self.run()
 
     def run(self):
         running = True
