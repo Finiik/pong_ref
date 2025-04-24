@@ -1,3 +1,4 @@
+from Views.Games.Pacman import run as run_pacman
 import sqlite3
 import pygame
 from Views.Games.Pong import Game  # Make sure this is a class with a .run() method
@@ -81,6 +82,20 @@ class GameSelector:
             snake_game = Game(self.user)
              # Make sure Pong has a class with a .run() method
             result = snake_game.run()
+            if result == "game_over":
+                self.run()
+        if selected_game == "Pacman":
+            from Views.Games.Pacman import Game
+            pacman_game = Game(self.user)
+            # Make sure Pong has a class with a .run() method
+            result = pacman_game.run()
+            if result == "game_over":
+                self.run()
+        if selected_game == "Space Invader":
+            from Views.Games.SpaceInvader import Game
+            space_game = Game(self.user)
+            # Make sure Pong has a class with a .run() method
+            result = space_game.run()
             if result == "game_over":
                 self.run()
 

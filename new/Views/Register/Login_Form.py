@@ -1,7 +1,6 @@
 import pygame
 from db import db_config
 import os  # Для роботи з файловою системою
-from Views.Games.Game_Selection_Form import GameSelector
 import Models.User
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -80,10 +79,10 @@ class LoginForm:
         if user and user[2] == self.password:
             self.message = "Login successful!"
             user = db_config.get_user_by_username(self.username)
-            
+            from Views.Games.Game_Selection_Form import GameSelector
             GameSelector(self.screen,self.font, user).run()
             return "game_selection"
-            
+
         else:
             self.message = "Invalid credentials"
         return None
