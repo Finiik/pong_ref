@@ -85,13 +85,19 @@ class GameSelector:
             if result == "game_over":
                 self.run()
         if selected_game == "Pacman":
-            from Views.Games.Pacman import run as run_pacman
-            run_pacman()
-            self.run()
+            from Views.Games.Pacman import Game
+            pacman_game = Game(self.user)
+            # Make sure Pong has a class with a .run() method
+            result = pacman_game.run()
+            if result == "game_over":
+                self.run()
         if selected_game == "Space Invader":
-            from Views.Games.SpaceInvader import run as run_space_invader
-            run_space_invader()
-            self.run()
+            from Views.Games.SpaceInvader import Game
+            space_game = Game(self.user)
+            # Make sure Pong has a class with a .run() method
+            result = space_game.run()
+            if result == "game_over":
+                self.run()
 
     def run(self):
         running = True

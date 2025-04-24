@@ -76,8 +76,8 @@ class Game:
                         pygame.Rect(
                             GAME_FIELD_X + col_index * CELL_SIZE,
                             GAME_FIELD_Y + row_index * CELL_SIZE,
-                            19,
-                            19
+                            6,
+                            6
                         )
                     )
                     if random.random() < 0.01:
