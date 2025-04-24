@@ -22,7 +22,7 @@ class GameSelector:
         self.clock = pygame.time.Clock()
 
     def load_games_from_db(self):
-        conn = sqlite3.connect('game_scores.database')
+        conn = sqlite3.connect('game_scores.db')
         cursor = conn.cursor()
         cursor.execute("SELECT name FROM games")
         games = cursor.fetchall()
@@ -71,14 +71,14 @@ class GameSelector:
         pygame.display.flip()
 
         if selected_game == "Pong":
-            from Views.Games.Pong import Game  # Local import to avoid circular
+            from Views.Games.Pong import Game  # ✅ Local import to avoid circular
             pong_game = Game(self.user)
              # Make sure Pong has a class with a .run() method
             result = pong_game.run()
             if result == "game_over":
                 self.run()
         if selected_game == "Snake":
-            from Views.Games.Snake import Game  # Local import to avoid circular
+            from Views.Games.Snake import Game  # ✅ Local import to avoid circular
             snake_game = Game(self.user)
              # Make sure Pong has a class with a .run() method
             result = snake_game.run()

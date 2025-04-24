@@ -1,7 +1,7 @@
 import pygame
 import os  # Для роботи з файловою системою
 from Views.Register import Select_Auth_Form  # Import the file with main_menu()
-from database import db_config
+from db import db_config
 
 # Initialize pygame and database
 pygame.init()

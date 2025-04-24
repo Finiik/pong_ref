@@ -1,5 +1,5 @@
 import pytest
-from Views.Games import Pacman
+from new.Views.Games import Pacman
 
 def test_pacman_score_increment():
     game = Pacman.Game()
