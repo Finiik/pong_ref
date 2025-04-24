@@ -2,11 +2,13 @@ import pygame
 import sys
 from Views.Register.Registeration_Form import RegisterForm
 from Views.Register.Login_Form import LoginForm
+import os  # Для роботи з файловою системою
 # Pygame setup
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((520, 640 ))
 pygame.display.set_caption("Game Auth Menu")
-font = pygame.font.SysFont("Arial", 36)
+font_path = os.path.join("./", "MinecraftTen-VGORe.ttf")
+font = pygame.font.Font(font_path, 36)
 clock = pygame.time.Clock()
 
 
@@ -17,8 +19,8 @@ BUTTON_COLOR = (0, 196, 156)
 HOVER_COLOR = (0, 230, 180)
 
 # Button setup
-login_button = pygame.Rect(300, 250, 200, 60)
-register_button = pygame.Rect(300, 350, 200, 60)
+login_button = pygame.Rect(165, 250, 200, 60)
+register_button = pygame.Rect(165, 350, 200, 60)
 registration_form = RegisterForm(screen, font)  
 login_form = LoginForm(screen, font)
 
@@ -32,8 +34,8 @@ def draw_button(rect, text, is_hovered):
 def main_menu():
     while True:
         screen.fill(BLACK)
-        title = font.render("Welcome", True, WHITE)
-        screen.blit(title, title.get_rect(center=(400, 120)))
+        title = font.render("Welcome!", True, WHITE)
+        screen.blit(title, title.get_rect(center=(260, 180)))
 
         mouse_pos = pygame.mouse.get_pos()
         draw_button(login_button, "Login", login_button.collidepoint(mouse_pos))

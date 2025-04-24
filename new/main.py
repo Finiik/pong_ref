@@ -1,13 +1,14 @@
 import pygame
-
+import os  # Для роботи з файловою системою
 from Views.Register import Select_Auth_Form  # Import the file with main_menu()
 from db import db_config
 
 # Initialize pygame and database
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((520, 640 ))
 pygame.display.set_caption("Your Game")
-font = pygame.font.SysFont("Arial", 30)
+font_path = os.path.join("./", "MinecraftTen-VGORe.ttf")
+font = pygame.font.Font(font_path, 36)
 
 db_config.init_db()
 
